@@ -33,7 +33,7 @@ defineProps({
           </div>
           <div>
             <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              <div v-for="wallet in wallets" :key="wallet.id" class="w-72 md:w-56 xl:w-64 bg-white shadow-md rounded-lg mx-auto break-all border-2">
+              <div v-for="wallet in wallets" :key="wallet.id" class="w-72 md:w-56 xl:w-64 bg-white shadow rounded-lg mx-auto break-all border-2">
                 <div class="font-medium h-24 p-2">{{ wallet.name }}</div>
                 <Link 
                   :href="route('wallet.edit', wallet.id)"
