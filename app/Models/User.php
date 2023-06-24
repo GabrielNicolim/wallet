@@ -27,8 +27,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function wallet()
+    public function wallets()
     {
-        return $this->hasOne(Wallet::class);
+        return $this->hasMany(Wallet::class);
     }
 }
