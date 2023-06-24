@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 
 defineProps({
   wallet: {
@@ -21,8 +21,16 @@ defineProps({
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div>
           <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div v-for="stock in wallet.stocks" :key="stock.id" class="w-60 bg-white shadow-md rounded-lg mx-auto">
-              <div class="font-medium h-24  p-2 ">{{ stock.name }}</div>
+            <div v-for="stock in wallet.stocks" :key="stock.id" class="w-72 md:w-56 xl:w-64 bg-white shadow-md rounded-lg mx-auto">
+              <div class="font-medium h-24 p-2">{{ stock.name }}</div>
+              <Link 
+                :href="route('wallet.edit', 1)"
+                method="get"
+                as="button"
+                class="w-full text-center p-1 bg-sky-400 rounded-b-lg text-white"
+              >
+                Editar
+              </Link>
             </div>
           </div>
         </div>
