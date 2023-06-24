@@ -10,6 +10,7 @@ class Stock extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
         'average_price',
         'ceiling_price',
         'quantity',
@@ -17,12 +18,12 @@ class Stock extends Model
         'sector_id',
     ];
 
-    public function wallet(): BelongsTo
+    public function wallet()
     {
         return $this->belongsTo(Wallet::class);
     }
 
-    public function sector(): BelongsTo
+    public function sector()
     {
         return $this->belongsTo(Sector::class);
     }

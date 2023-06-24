@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->decimal('average_price', 8, 2);
             $table->decimal('ceiling_price', 8, 2)->nullable();
             $table->integer('quantity')->default(0);
