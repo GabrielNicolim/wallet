@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WalletController;
-use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('wallet')->group(function () {
+        Route::get('/create', [WalletController::class, 'create'])->name('wallet.create');
+        Route::post('/', [WalletController::class, 'store'])->name('wallet.store');
         Route::get('/{wallet}/edit', [WalletController::class, 'edit'])->name('wallet.edit');
     });
 });

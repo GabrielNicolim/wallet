@@ -4,7 +4,7 @@ import { Head, Link } from '@inertiajs/vue3'
 
 defineProps({
   wallet: {
-    type: Array,
+    type: Object,
   },
 })
 </script>
@@ -27,7 +27,7 @@ defineProps({
                 :href="route('wallet.edit', 1)"
                 method="get"
                 as="button"
-                class="w-full text-center p-1 bg-sky-400 rounded-b-lg text-white"
+                class="w-full text-center p-1 bg-indigo-400 hover:bg-indigo-500 rounded-b-lg text-white"
               >
                 Editar
               </Link>
