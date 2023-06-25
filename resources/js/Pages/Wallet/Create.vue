@@ -4,7 +4,8 @@ import PrimaryButton from '@/Components/PrimaryButton.vue'
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import TextInput from '@/Components/TextInput.vue'
-import { Head, useForm } from '@inertiajs/vue3'
+import { Head, useForm, Link } from '@inertiajs/vue3'
+import SecondaryButton from '@/Components/SecondaryButton.vue'
 
 const form = useForm({
   name: '',
@@ -43,6 +44,12 @@ const form = useForm({
 
             <div class="flex items-center gap-4">
               <PrimaryButton :disabled="form.processing">Adicionar</PrimaryButton>
+              <Link
+                :href="route('dashboard')"
+                as="button"
+              >
+                <SecondaryButton :disabled="form.processing">Cancelar</SecondaryButton>
+              </Link>
 
               <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
                 <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Salvo</p>

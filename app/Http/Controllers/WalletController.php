@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\WalletRequest;
 use App\Models\Wallet;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -14,30 +14,39 @@ class WalletController extends Controller
         return Inertia::render('Wallet/Create');
     }
 
-    public function store(Request $request)
+    public function store(WalletRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:64',
-        ], [
-           'name.required' => 'O campo nome é obrigatório.',
-           'name.max' => 'O campo nome não pode ter mais de 64 caracteres.' 
-        ]);
-
         $wallet = Wallet::create([
             'name' => $request->input('name'),
             'user_id' => Auth::user()->id,
         ]);
 
-        return Inertia::render('Wallet/Edit', [
+        return Inertia::render('Wallet/Manage', [
             'wallet' => $wallet
         ]);
     }
 
     public function edit(Wallet $wallet)
     {
+        return Inertia::render('Wallet/Edit', [
+            'wallet' => $wallet
+        ]);
+    }
+
+    public function update(Wallet $wallet, WalletRequest $request)
+    {
+        $wallet->update([
+            'name' => $request->input('name'),
+        ]);
+
+        return redirect()->route('dashboard');
+    }
+
+    public function manage(Wallet $wallet)
+    {
         $wallet->load('stocks');
 
-        return Inertia::render('Wallet/Edit', [
+        return Inertia::render('Wallet/Manage', [
             'wallet' => $wallet
         ]);
     }

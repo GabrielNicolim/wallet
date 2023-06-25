@@ -34,9 +34,19 @@ defineProps({
           <div>
             <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               <div v-for="wallet in wallets" :key="wallet.id" class="w-72 md:w-56 xl:w-64 bg-white shadow rounded-lg mx-auto break-all border-2">
-                <div class="font-medium h-24 p-2">{{ wallet.name }}</div>
+                <div class="font-medium h-24 p-2">
+                  <span>{{ wallet.name }}</span>
+                  <Link
+                    :href="route('wallet.edit', wallet.id)"
+                    method="get"
+                    as="button"
+                    class="ml-2 cursor-pointer hover:"
+                  >
+                    <i class="fa-regular fa-pen-to-square" />
+                  </Link>  
+                </div>
                 <Link 
-                  :href="route('wallet.edit', wallet.id)"
+                  :href="route('wallet.manage', wallet.id)"
                   method="get"
                   as="button"
                   class="w-full text-center p-1 bg-indigo-400 hover:bg-indigo-500 rounded-b-md text-white"

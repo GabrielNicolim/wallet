@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [WalletController::class, 'create'])->name('wallet.create');
         Route::post('/', [WalletController::class, 'store'])->name('wallet.store');
         Route::get('/{wallet}/edit', [WalletController::class, 'edit'])->name('wallet.edit');
+        Route::put('/{wallet}', [WalletController::class, 'update'])->name('wallet.update');
+        Route::get('/{wallet}/manage', [WalletController::class, 'manage'])->name('wallet.manage');
     });
 });
 

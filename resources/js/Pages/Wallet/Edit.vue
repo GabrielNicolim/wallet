@@ -1,11 +1,22 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
+import { Head, useForm, usePage, Link } from '@inertiajs/vue3'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
+import InputError from '@/Components/InputError.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import TextInput from '@/Components/TextInput.vue'
+import SecondaryButton from '@/Components/SecondaryButton.vue'
 
 defineProps({
   wallet: {
     type: Object,
   },
+})
+
+const walletData = usePage().props.wallet
+
+const form = useForm({
+  name: walletData.name,
 })
 </script>
 
@@ -14,31 +25,45 @@ defineProps({
 
   <AuthenticatedLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ wallet.name }}</h2>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Editar - Carteira</h2>
     </template>
 
     <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-          <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div v-for="stock in wallet.stocks" :key="stock.id" class="w-72 md:w-56 xl:w-64 bg-white shadow rounded-lg mx-auto break-all border-2">
-              <div class="h-28 p-2">
-                <div class="font-bold">{{ stock.name }}</div>
-                <div v-if="stock.average_price" class="text-sm text-gray-500">
-                  <span class="font-medium">Preço médio: </span>
-                  <span>R$ {{ stock.formatted_average_price }}</span>
-                </div>
-                <div v-if="stock.ceiling_price" class="text-sm text-gray-500">
-                  <span class="font-medium">Preço teto: </span>
-                  <span>R$ {{ stock.formatted_ceiling_price }}</span>
-                </div>
-                <div class="text-sm text-gray-500">
-                  <span class="font-medium">Quantidade: </span>
-                  <span>{{ stock.formatted_quantity }}</span>
-                </div>
-              </div>
+          <h2 class="text-lg font-medium text-gray-900">Informações da carteira</h2>
+
+          <form class="mt-6 space-y-6 md:w-1/2" @submit.prevent="form.put(route('wallet.update', wallet.id))">
+            <div>
+              <InputLabel for="name" value="Nome" />
+
+              <TextInput
+                id="name"
+                v-model="form.name"
+                type="text"
+                class="mt-1 block w-full"
+                required
+                autofocus
+              />
+
+              <InputError class="mt-2" :message="form.errors.name" />
             </div>
-          </div>
+
+            <div class="flex items-center gap-4">
+              <PrimaryButton :disabled="form.processing">Salvar</PrimaryButton>
+              <Link
+                :href="route('dashboard')"
+                as="button"
+              >
+                <SecondaryButton :disabled="form.processing">Cancelar</SecondaryButton>
+              </Link>
+        
+
+              <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
+                <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Salvo</p>
+              </Transition>
+            </div>
+          </form>
         </div>
       </div>
     </div>
