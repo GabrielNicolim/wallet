@@ -8,17 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('sectors', function (Blueprint $table) {
+        Schema::create('operations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->decimal('price', 8, 2);
+            $table->integer('quantity');
+            $table->tinyInteger('type');
             $table->timestamps();
-            $table->softDeletes();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('stock_id')->constrained('stocks')->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('sectors');
+        Schema::dropIfExists('operations');
     }
 };

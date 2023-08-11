@@ -11,9 +11,7 @@ class Stock extends Model
 
     protected $fillable = [
         'name',
-        'average_price',
         'ceiling_price',
-        'quantity',
         'wallet_id',
         'sector_id',
     ];
@@ -24,21 +22,6 @@ class Stock extends Model
         'formatted_quantity'
     ];
 
-    public function getFormattedAveragePriceAttribute()
-    {
-        return number_format($this->average_price, 2, ',', '.');
-    }
-
-    public function getFormattedCeilingPriceAttribute()
-    {
-        return number_format($this->ceiling_price, 2, ',', '.');
-    }
-
-    public function getFormattedQuantityAttribute()
-    {
-        return number_format($this->quantity, 0, ',', '.');
-    }
-
     public function wallet()
     {
         return $this->belongsTo(Wallet::class);
@@ -47,5 +30,45 @@ class Stock extends Model
     public function sector()
     {
         return $this->belongsTo(Sector::class);
+    }
+
+    public function operations()
+    {
+        return $this->hasMany(Operation::class);
+    }
+
+    public function getFormattedCeilingPriceAttribute()
+    {
+        return number_format($this->ceiling_price, 2, ',', '.');
+    }
+
+    public function getFormattedAveragePriceAttribute()
+    {
+        $operations = $this->operations()
+            ->where('type', Operation::PURCHASE)
+            ->get();
+
+        $price = 0;
+        $total = $operations->sum('quantity');
+        collect($operations)->map(function ($operation) use ($price) {
+            $price += $operation->price * $operation->quantity;
+        });
+
+        $averagePrice = $total ? ($price/$total) : 0;
+
+        return number_format($averagePrice, 2, ',', '.');
+    }
+
+    public function getFormattedQuantityAttribute()
+    {
+        $operations = $this->operations()
+            ->get();
+
+        $total = 0;
+        collect($operations)->map(function ($operation) use ($total) {
+            $total += $operation->quantity * ($operation->type == Operation::PURCHASE ? 1 : -1);
+        });
+
+        return number_format($total, 0, ',', '.');
     }
 }

@@ -20,13 +20,13 @@ defineProps({
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-          <div class="flex justify-between mb-4">
-            <div />
+          <div class="sm:flex justify-between mb-4">
+            <h2 class="text-lg font-medium text-gray-900">Carteiras</h2>
             <Link 
               :href="route('wallet.create')"
               method="get"
               as="button"
-              class="p-2 bg-indigo-400 hover:bg-indigo-500 text-white rounded-md"
+              class="block p-2 bg-indigo-400 hover:bg-indigo-500 text-white rounded-md shadow"
             >
               Adicionar carteira
             </Link>

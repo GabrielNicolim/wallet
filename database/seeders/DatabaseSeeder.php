@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Sector::factory()->create([
-            'name' => 'Materiais básicos'
+            'name' => 'Materiais básicos',
+            'user_id' => 1
         ]);
 
         $stocks = ['VALE3', 'PETR4', 'BBAS3'];

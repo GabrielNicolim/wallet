@@ -11,9 +11,7 @@ return new class extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('average_price', 8, 2)->nullable();
             $table->decimal('ceiling_price', 8, 2)->nullable();
-            $table->integer('quantity')->default(0);
             $table->timestamps();
             $table->foreignId('wallet_id')->constrained('wallets');
             $table->foreignId('sector_id')->constrained('sectors');

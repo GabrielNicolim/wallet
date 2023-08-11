@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wallet::class);
     }
+
+    public function sectors()
+    {
+        return $this->hasMany(Sector::class);
+    }
 }

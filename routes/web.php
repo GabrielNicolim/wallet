@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +29,16 @@ Route::middleware('auth')->group(function () {
                 Route::get('/edit', [WalletController::class, 'edit'])->name('wallet.edit');
                 Route::put('/', [WalletController::class, 'update'])->name('wallet.update');
                 Route::get('/manage', [WalletController::class, 'manage'])->name('wallet.manage');
+
+                Route::prefix('/stock')->group(function () {
+                    Route::get('/create', [StockController::class, 'create'])->name('stock.create');
+                    Route::post('/', [StockController::class, 'store'])->name('stock.store');
+                    
+                    Route::prefix('/{stock}')->group(function () {
+                        Route::get('/edit', [StockController::class, 'edit'])->name('stock.edit');
+                        Route::put('/', [StockController::class, 'update'])->name('stock.update');
+                    });
+                });
             });
         });
     });
