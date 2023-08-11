@@ -50,9 +50,10 @@ class Stock extends Model
 
         $price = 0;
         $total = $operations->sum('quantity');
-        collect($operations)->map(function ($operation) use ($price) {
+        
+        foreach($operations as $operation) {
             $price += $operation->price * $operation->quantity;
-        });
+        }
 
         $averagePrice = $total ? ($price/$total) : 0;
 
@@ -65,9 +66,9 @@ class Stock extends Model
             ->get();
 
         $total = 0;
-        collect($operations)->map(function ($operation) use ($total) {
+        foreach($operations as $operation) {
             $total += $operation->quantity * ($operation->type == Operation::PURCHASE ? 1 : -1);
-        });
+        }
 
         return number_format($total, 0, ',', '.');
     }
