@@ -19,7 +19,9 @@ class Stock extends Model
     protected $appends  = [
         'formatted_average_price',
         'formatted_ceiling_price',
-        'formatted_quantity'
+        'formatted_quantity',
+        'average_price',
+        'quantity',
     ];
 
     public function wallet()
@@ -42,34 +44,44 @@ class Stock extends Model
         return number_format($this->ceiling_price, 2, ',', '.');
     }
 
-    public function getFormattedAveragePriceAttribute()
+    public function getAveragePriceAttribute()
     {
         $operations = $this->operations()
-            ->where('type', Operation::PURCHASE)
-            ->get();
+        ->where('type', Operation::PURCHASE)
+        ->get();
 
         $price = 0;
-        $total = $operations->sum('quantity');
+        $quantity = $operations->sum('quantity');
         
         foreach($operations as $operation) {
             $price += $operation->price * $operation->quantity;
         }
 
-        $averagePrice = $total ? ($price/$total) : 0;
+        $averagePrice = $quantity ? ($price/$quantity) : 0;
 
-        return number_format($averagePrice, 2, ',', '.');
+        return $averagePrice;
     }
 
-    public function getFormattedQuantityAttribute()
+    public function getFormattedAveragePriceAttribute()
+    {
+        return number_format($this->average_price, 2, ',', '.');
+    }
+
+    public function getQuantityAttribute()
     {
         $operations = $this->operations()
             ->get();
 
-        $total = 0;
+        $quantity = 0;
         foreach($operations as $operation) {
-            $total += $operation->quantity * ($operation->type == Operation::PURCHASE ? 1 : -1);
+            $quantity += $operation->quantity * ($operation->type == Operation::PURCHASE ? 1 : -1);
         }
 
-        return number_format($total, 0, ',', '.');
+        return $quantity;
+    }
+
+    public function getFormattedQuantityAttribute()
+    {
+        return number_format($this->quantity, 0, ',', '.');
     }
 }

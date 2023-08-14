@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/edit', [WalletController::class, 'edit'])->name('wallet.edit');
                 Route::put('/', [WalletController::class, 'update'])->name('wallet.update');
                 Route::get('/manage', [WalletController::class, 'manage'])->name('wallet.manage');
+                Route::get('/consolidated-portfolio', [WalletController::class, 'consolidatedPortfolio'])->name('wallet.consolidate.portfolio');
 
                 Route::prefix('/stock')->group(function () {
                     Route::get('/create', [StockController::class, 'create'])->name('stock.create');

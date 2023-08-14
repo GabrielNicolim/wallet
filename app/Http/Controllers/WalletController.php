@@ -47,7 +47,32 @@ class WalletController extends Controller
         $wallet->load('stocks');
 
         return Inertia::render('Wallet/Manage', [
-            'wallet' => $wallet
+            'wallet' => $wallet,
+            'consolidatedPortfolio' => $this->consolidatedPortfolio($wallet),
         ]);
+    }
+
+    protected function consolidatedPortfolio(Wallet $wallet)
+    {
+        $stocks = $wallet->stocks;
+
+        $stocksData = [
+            'names' => [],
+            'values' => [],
+        ];
+
+        foreach($stocks as $stock)
+        {
+            array_push($stocksData['names'], $stock->name);
+            array_push($stocksData['values'], ($stock->average_price * $stock->quantity));
+        }
+
+        return  [
+            'labels' => $stocksData['names'],
+              'datasets' => [[
+                    'data' => $stocksData['values'],
+                ],
+            ],
+        ];
     }
 }

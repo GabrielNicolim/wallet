@@ -1,9 +1,13 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
+import Chart from '@/Components/Chart.vue'
 
 defineProps({
   wallet: {
+    type: Object,
+  },
+  consolidatedPortfolio: {
     type: Object,
   },
 })
@@ -63,6 +67,16 @@ defineProps({
                   <span>{{ stock.formatted_quantity }}</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+          <div class="sm:flex justify-between mb-4">
+            <h2 class="text-lg font-medium text-gray-900">Informações</h2>
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="flex justify-center">
+              <Chart :chart-data="consolidatedPortfolio" />
             </div>
           </div>
         </div>
