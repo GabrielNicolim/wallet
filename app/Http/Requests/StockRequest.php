@@ -11,9 +11,9 @@ class StockRequest extends FormRequest
         return [
             'name' => 'required|string|max:64',
             'sector_id' => 'required|exists:sectors,id',
-            'average_price' => 'numeric|nullable|min:0',
             'ceiling_price' => 'numeric|nullable|min:0',
-            'quantity' => 'integer|nullable|min:0'
+            'quantity' => 'sometimes|integer|nullable|min:0',
+            'average_price' => 'sometimes|numeric|nullable|min:0'
         ];
     }
 

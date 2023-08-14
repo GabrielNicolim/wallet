@@ -69,18 +69,27 @@ class StockController extends Controller
 
     public function edit(Wallet $wallet, Stock $stock)
     {
+        $sectors =  Auth::user()->sectors;
+
         return Inertia::render('Stock/Edit', [
             'wallet' => $wallet,
-            'stock' => $stock
+            'stock' => $stock,
+            'sectors' => $sectors
         ]);
     }
 
-    // public function update(Wallet $wallet, WalletRequest $request)
-    // {
-    //     // $wallet->update([
-    //     //     'name' => $request->input('name'),
-    //     // ]);
+    public function update(Wallet $wallet, Stock $stock, StockRequest $request)
+    {
+        $stock->update([
+            'name' => $request->input('name'),
+            'sector_id' => $request->input('sector_id'),
+            'ceiling_price' => $request->input('ceiling_price'),
+        ]);
 
-    //     // return redirect()->route('dashboard');
-    // }
+        $wallet->load('stocks');
+
+        return Inertia::render('Wallet/Manage', [
+            'wallet' => $wallet
+        ]);
+    }
 }

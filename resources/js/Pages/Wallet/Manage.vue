@@ -31,20 +31,25 @@ defineProps({
               >
                 Adicionar ativo
               </Link>
-              <Link 
-                :href="route('stock.create', wallet.id)"
-                method="get"
-                as="button"
-                class="block p-2 bg-indigo-400 hover:bg-indigo-500 text-white rounded-md shadow"
-              >
-                Adicionar operação
-              </Link>
             </div>
           </div>
           <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div v-for="stock in wallet.stocks" :key="stock.id" class="w-72 md:w-56 xl:w-64 bg-white shadow rounded-lg mx-auto break-all border-2">
               <div class="h-28 p-2">
-                <div class="font-bold">{{ stock.name }}</div>
+                <div class="font-bold py-1">
+                  <span>{{ stock.name }}</span>
+                  <Link
+                    :href="route('stock.edit', {
+                      wallet: wallet.id,
+                      stock: stock.id
+                    })"
+                    method="get"
+                    as="button"
+                    class="ml-2 cursor-pointer"
+                  >
+                    <i class="fa-regular fa-pen-to-square" />
+                  </Link>  
+                </div>
                 <div v-if="stock.formatted_average_price" class="text-sm text-gray-500">
                   <span class="font-medium">Preço médio: </span>
                   <span>R$ {{ stock.formatted_average_price }}</span>

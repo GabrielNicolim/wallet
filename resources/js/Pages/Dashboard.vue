@@ -40,7 +40,7 @@ defineProps({
                     :href="route('wallet.edit', wallet.id)"
                     method="get"
                     as="button"
-                    class="ml-2 cursor-pointer hover:"
+                    class="ml-2 cursor-pointer"
                   >
                     <i class="fa-regular fa-pen-to-square" />
                   </Link>  
