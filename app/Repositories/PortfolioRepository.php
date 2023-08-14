@@ -86,6 +86,7 @@ class PortfolioRepository
     {
         return  [
             'chartOptions' => [
+                'responsive' => true,
                 'plugins' => [
                     'title' => [
                         'display' => true,

@@ -8,6 +8,13 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
 import { Link } from '@inertiajs/vue3'
 
 const showingNavigationDropdown = ref(false)
+
+defineProps({
+  wallet: {
+    required: false,
+    type: Object,
+  },
+})
 </script>
 
 <template>
@@ -29,6 +36,7 @@ const showingNavigationDropdown = ref(false)
                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                   Dashboard
                 </NavLink>
+                <NavLink v-if="wallet" :href="route('wallet.manage', wallet.id)" :active="route().current('wallet.manage')" v-text="wallet.name" />
               </div>
             </div>
 

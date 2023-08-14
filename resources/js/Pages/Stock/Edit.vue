@@ -31,17 +31,17 @@ const form = useForm({
 </script>
 
 <template>
-  <Head title="Carteira" />
+  <Head title="Ativo" />
 
-  <AuthenticatedLayout>
+  <AuthenticatedLayout :wallet="wallet">
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Editar - Carteira</h2>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Editar - Ativo</h2>
     </template>
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-          <h2 class="text-lg font-medium text-gray-900">Informações da carteira</h2>
+          <h2 class="text-lg font-medium text-gray-900">Informações do ativo</h2>
 
           <form
             class="mt-6 space-y-6 md:w-1/2" @submit.prevent="form.put(route('stock.update', {
@@ -102,7 +102,7 @@ const form = useForm({
             </div>
 
             <div class="flex items-center gap-4">
-              <PrimaryButton :disabled="form.processing">Adicionar</PrimaryButton>
+              <PrimaryButton :disabled="form.processing">Salvar</PrimaryButton>
               <Link
                 :href="route('wallet.manage', wallet.id)"
                 as="button"

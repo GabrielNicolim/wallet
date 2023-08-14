@@ -19,7 +19,7 @@ defineProps({
 <template>
   <Head title="Carteira" />
 
-  <AuthenticatedLayout>
+  <AuthenticatedLayout :wallet="wallet">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ wallet.name }}</h2>
     </template>
@@ -42,7 +42,7 @@ defineProps({
           </div>
           <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div v-for="stock in wallet.stocks" :key="stock.id" class="w-72 md:w-56 xl:w-64 bg-white shadow rounded-lg mx-auto break-all border-2">
-              <div class="h-28 p-2">
+              <div class="h-32 p-2">
                 <div class="font-bold py-1">
                   <span>{{ stock.name }}</span>
                   <Link
@@ -68,6 +68,10 @@ defineProps({
                 <div class="text-sm text-gray-500">
                   <span class="font-medium">Quantidade: </span>
                   <span>{{ stock.formatted_quantity }}</span>
+                </div>
+                <div class="text-sm text-gray-500">
+                  <span class="font-medium">Setor: </span>
+                  <span>{{ stock.sector.name }}</span>
                 </div>
               </div>
             </div>

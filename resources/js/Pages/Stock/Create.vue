@@ -28,7 +28,7 @@ defineProps({
 <template>
   <Head title="Ativo" />
 
-  <AuthenticatedLayout>
+  <AuthenticatedLayout :wallet="wallet">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Adicionar - Ativo</h2>
     </template>
