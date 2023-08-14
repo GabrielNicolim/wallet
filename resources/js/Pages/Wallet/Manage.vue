@@ -10,6 +10,9 @@ defineProps({
   consolidatedPortfolio: {
     type: Object,
   },
+  sectorPortfolio: {
+    type: Object,
+  },
 })
 </script>
 
@@ -76,7 +79,16 @@ defineProps({
           </div>
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div class="flex justify-center">
-              <Chart :chart-data="consolidatedPortfolio" />
+              <Chart 
+                :chart-data="consolidatedPortfolio.chartData"
+                :chart-options="consolidatedPortfolio.chartOptions"
+              />
+            </div>
+            <div class="flex justify-center">
+              <Chart 
+                :chart-data="sectorPortfolio.chartData"
+                :chart-options="sectorPortfolio.chartOptions"
+              />
             </div>
           </div>
         </div>

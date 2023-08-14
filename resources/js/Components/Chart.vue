@@ -20,19 +20,10 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  data() {
-    return {
-      chartOptions: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Carteira consolidada',
-          },
-        },
-      },
-    }
+    chartOptions: {
+      type: Object,
+      required: true,
+    },
   },
 }
 </script>

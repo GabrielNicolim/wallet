@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StockRequest;
 use App\Models\Operation;
-use App\Models\Sector;
 use App\Models\Stock;
 use App\Models\Wallet;
+use App\Repositories\PortfolioRepository;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class StockController extends Controller
 {
+    protected $portfolioRepository;
+
+    public function __construct(PortfolioRepository $portfolioRepository)
+    {
+        $this->portfolioRepository = $portfolioRepository;
+    }
+
     public function create(Wallet $wallet)
     {
         $sectors =  Auth::user()->sectors;
@@ -63,7 +70,9 @@ class StockController extends Controller
         $wallet->load('stocks');
 
         return Inertia::render('Wallet/Manage', [
-            'wallet' => $wallet
+            'wallet' => $wallet,
+            'consolidatedPortfolio' => $this->portfolioRepository->getConsolidatedPortfolio($wallet),
+            'sectorPortfolio' => $this->portfolioRepository->getSectorPortfolio($wallet),
         ]);
     }
 
@@ -89,7 +98,9 @@ class StockController extends Controller
         $wallet->load('stocks');
 
         return Inertia::render('Wallet/Manage', [
-            'wallet' => $wallet
+            'wallet' => $wallet,
+            'consolidatedPortfolio' => $this->portfolioRepository->getConsolidatedPortfolio($wallet),
+            'sectorPortfolio' => $this->portfolioRepository->getSectorPortfolio($wallet),
         ]);
     }
 }

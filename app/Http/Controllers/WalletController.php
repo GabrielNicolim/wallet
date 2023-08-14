@@ -4,11 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WalletRequest;
 use App\Models\Wallet;
+use App\Repositories\PortfolioRepository;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class WalletController extends Controller
 {
+    protected $portfolioRepository;
+
+    public function __construct(PortfolioRepository $portfolioRepository)
+    {
+        $this->portfolioRepository = $portfolioRepository;
+    }
+
     public function create()
     {
         return Inertia::render('Wallet/Create');
@@ -48,31 +56,8 @@ class WalletController extends Controller
 
         return Inertia::render('Wallet/Manage', [
             'wallet' => $wallet,
-            'consolidatedPortfolio' => $this->consolidatedPortfolio($wallet),
+            'consolidatedPortfolio' => $this->portfolioRepository->getConsolidatedPortfolio($wallet),
+            'sectorPortfolio' => $this->portfolioRepository->getSectorPortfolio($wallet),
         ]);
-    }
-
-    protected function consolidatedPortfolio(Wallet $wallet)
-    {
-        $stocks = $wallet->stocks;
-
-        $stocksData = [
-            'names' => [],
-            'values' => [],
-        ];
-
-        foreach($stocks as $stock)
-        {
-            array_push($stocksData['names'], $stock->name);
-            array_push($stocksData['values'], ($stock->average_price * $stock->quantity));
-        }
-
-        return  [
-            'labels' => $stocksData['names'],
-              'datasets' => [[
-                    'data' => $stocksData['values'],
-                ],
-            ],
-        ];
     }
 }
