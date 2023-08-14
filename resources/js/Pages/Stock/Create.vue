@@ -122,7 +122,7 @@ defineProps({
             <div class="flex items-center gap-4">
               <PrimaryButton :disabled="form.processing">Adicionar</PrimaryButton>
               <Link
-                :href="route('dashboard')"
+                :href="route('wallet.manage', wallet.id)"
                 as="button"
               >
                 <SecondaryButton :disabled="form.processing">Cancelar</SecondaryButton>
